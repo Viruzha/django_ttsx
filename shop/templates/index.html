@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+    {% block content %}
+    
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">主页</a></li>
+                        <li><a href="shop.html">全部商品</a></li>
+                        <!-- <li><a href="single-product.html">商品详情页</a></li> -->
+                        <li><a href="cart.html">购物车</a></li>
+                        <!-- <li><a href="checkout.html">核对订单页</a></li> -->
+                        <li><a href="#">分类</a></li>
+                        <li><a href="#">其他</a></li>
+                        <li><a href="#">联系我们</a></li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div> <!-- End mainmenu area -->
+    
+    <div class="slider-area">
+        	<!-- Slider -->
+			<div class="block-slider block-slider4">
+				<ul class="" id="bxslider-home4">
+                    {% for i in listrecommand %}
+					<li>
+						<img src="/media/{{ i.himage }}" alt="Slide">
+						<div class="caption-group">
+							<h2 class="caption title">
+								{{i.hproduct.name}} <span class="primary">{{i.hcomment1}} <strong>{{i.hcomment2}}</strong></span>
+							</h2>
+							<h4 class="caption subtitle">{{i.hcomment3}}</h4>
+							<a class="caption button-radius" href="#"><span class="icon"></span>详情</a>
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<!-- ./Slider -->
+    </div> <!-- End slider area -->
+    
+    <div class="promo-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-promo promo1">
+                        <i class="fa fa-refresh"></i>
+                        <p>30天无条件退货</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-promo promo2">
+                        <i class="fa fa-truck"></i>
+                        <p>免运费</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-promo promo3">
+                        <i class="fa fa-lock"></i>
+                        <p>支付安全</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-promo promo4">
+                        <i class="fa fa-gift"></i>
+                        <p>产品新</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End promo area -->
+    
+    <div class="maincontent-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="latest-product">
+                        <h2 class="section-title">最新产品</h2>
+                        <div class="product-carousel">
+                            {% for p in newproduct %}
+                            <div class="single-product">
+                                <div class="product-f-image">
+                                    <img src="media/{{p.picture}}" alt="">
+                                    <div class="product-hover">
+                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>加入购物车</a>
+                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> 查看详情</a>
+                                    </div>
+                                </div>
+                                
+                                <h2><a href="single-product.html">{{ p.name }}</a></h2>
+                                
+                                <div class="product-carousel-price">
+                                    <ins>¥{{p.price}}</ins> <del>¥{{p.discprice}}</del>
+                                </div> 
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End main content area -->
+    
+    <div class="brands-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="brand-wrapper">
+                        <div class="brand-list">
+                            {% for i in allkinds %}
+                            <img src="media/{{i.klogo}}" alt="{{i.kname}}">
+                            {% endfor %}                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End brands area -->
+    
+    <div class="product-widget-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-product-widget">
+                        <h2 class="product-wid-title">热门销售</h2>
+                        <a href="" class="wid-view-more">查看全部</a>
+                        {% for i in topseller %}
+                        <div class="single-wid-product">
+                            <a href="single-product.html"><img src="media{{i.picture}}" alt="{{i.name}}" class="product-thumb"></a>
+                            <h2><a href="single-product.html">{{i.name}}</a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins>¥{{i.discprice}}</ins> <del>¥{{i.price}}</del>
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="single-product-widget">
+                        <h2 class="product-wid-title">最近浏览</h2>
+                        <a href="#" class="wid-view-more">查看全部</a>
+                        {% for i in recentviews %}
+                        <div class="single-wid-product">
+                            <a href="single-product.html"><img src="media/{{i.vproduct.picture}}" alt="{{i.vproduct.name}}" class="product-thumb"></a>
+                            <h2><a href="single-product.html">{{i.vproduct.name}}</a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins>¥{{i.vproduct.discprice}}</ins> <del>¥{{i.vproduct.price}}</del>
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="single-product-widget">
+                        <h2 class="product-wid-title">最新商品</h2>
+                        <a href="#" class="wid-view-more">查看全部</a>
+                        {% for i in topnew %}
+                        <div class="single-wid-product">
+                            <a href="single-product.html"><img src="{{i.picture}}" alt="" class="product-thumb"></a>
+                            <h2><a href="single-product.html">{{i.name}}</a></h2>
+                            <div class="product-wid-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product-wid-price">
+                                <ins>¥{{i.discprice}}</ins> <del>¥{{i.price}}</del>
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End product widget area -->
+    
+
+
+    {% endblock %}
