@@ -14,8 +14,8 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html">主页</a></li>
-                        <li><a href="shop.html">全部商品</a></li>
+                        <li class="active"><a href="{% url 'index' %}">主页</a></li>
+                        <li><a href="{% url 'allproducts' %}">全部商品</a></li>
                         <!-- <li><a href="single-product.html">商品详情页</a></li> -->
                         <li><a href="cart.html">购物车</a></li>
                         <!-- <li><a href="checkout.html">核对订单页</a></li> -->
@@ -40,7 +40,7 @@
 								{{i.hproduct.name}} <span class="primary">{{i.hcomment1}} <strong>{{i.hcomment2}}</strong></span>
 							</h2>
 							<h4 class="caption subtitle">{{i.hcomment3}}</h4>
-							<a class="caption button-radius" href="#"><span class="icon"></span>详情</a>
+							<a class="caption button-radius" href="single-page/{{i.hproduct.id}}"><span class="icon"></span>详情</a>
 						</div>
 					</li>
 					{% endfor %}
@@ -89,17 +89,17 @@
                     <div class="latest-product">
                         <h2 class="section-title">最新产品</h2>
                         <div class="product-carousel">
-                            {% for p in newproduct %}
+                            {% for p in newproducts %}
                             <div class="single-product">
                                 <div class="product-f-image">
-                                    <img src="media/{{p.picture}}" alt="">
+                                    <img src="/media/{{p.picture}}" alt="">
                                     <div class="product-hover">
-                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>加入购物车</a>
-                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> 查看详情</a>
+                                        <a href="{% url 'addtocart' p.id %}" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i>加入购物车</a>
+                                        <a href="{% url 'singlepage' p.id %}" class="view-details-link"><i class="fa fa-link"></i> 查看详情</a>
                                     </div>
                                 </div>
                                 
-                                <h2><a href="single-product.html">{{ p.name }}</a></h2>
+                                <h2><a href="{% url 'singlepage' p.id %}">{{ p.name }}</a></h2>
                                 
                                 <div class="product-carousel-price">
                                     <ins>¥{{p.price}}</ins> <del>¥{{p.discprice}}</del>
@@ -121,7 +121,7 @@
                     <div class="brand-wrapper">
                         <div class="brand-list">
                             {% for i in allkinds %}
-                            <img src="media/{{i.klogo}}" alt="{{i.kname}}">
+                            <img src="/media/{{i.klogo}}" alt="{{i.kname}}">
                             {% endfor %}                          
                         </div>
                     </div>
@@ -140,8 +140,8 @@
                         <a href="" class="wid-view-more">查看全部</a>
                         {% for i in topseller %}
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="media{{i.picture}}" alt="{{i.name}}" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{i.name}}</a></h2>
+                            <a href="{% url 'singlepage' i.id %}"><img src="/media/{{i.picture}}" alt="{{i.name}}" class="product-thumb"></a>
+                            <h2><a href="{% url 'singlepage' i.id %}">{{i.name}}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -162,8 +162,8 @@
                         <a href="#" class="wid-view-more">查看全部</a>
                         {% for i in recentviews %}
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="media/{{i.vproduct.picture}}" alt="{{i.vproduct.name}}" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{i.vproduct.name}}</a></h2>
+                            <a href="{% url 'singlepage' i.vproduct_id %}"><img src="media/{{i.vproduct.picture}}" alt="{{i.vproduct.name}}" class="product-thumb"></a>
+                            <h2><a href="{% url 'singlepage' i.vproduct_id %}">{{i.vproduct.name}}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -184,8 +184,8 @@
                         <a href="#" class="wid-view-more">查看全部</a>
                         {% for i in topnew %}
                         <div class="single-wid-product">
-                            <a href="single-product.html"><img src="{{i.picture}}" alt="" class="product-thumb"></a>
-                            <h2><a href="single-product.html">{{i.name}}</a></h2>
+                            <a href="{% url 'singlepage' i.id %}"><img src="media/{{i.picture}}" alt="" class="product-thumb"></a>
+                            <h2><a href="{% url 'singlepage' i.id %}">{{i.name}}</a></h2>
                             <div class="product-wid-rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
