@@ -3,7 +3,9 @@ import datetime
 from django.shortcuts import render
 from product.models import product, kind, homerecommend, user, recentview, tags
 from django.db.models import Q
-from django.core.paginator import Paginator ,EmptyPage,PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
 def index(request):
     # 使用cookie进行类session通信
     def renderr(userid):
@@ -32,7 +34,7 @@ def index(request):
         request.session['usession'] = userid
         user.objects.create(usessionid=userid, uname='vistor', uVistor=True)
         response = renderr(userid)
-        response.set_cookie('usession', userid,max_age=3600*24)#cookie仅存活１天
+        response.set_cookie('usession', userid, max_age=3600*24)  # cookie仅存活１天
         return response
 
     recentviews = recentview.objects.filter(
@@ -48,14 +50,14 @@ def SinglePage(request, i):
     tags = sproduct.tag.all()
     kindproducts = product.objects.filter(kind=sproduct.kind).order_by('?')[:3]
     userid = request.COOKIES.get('usession')
-    userid=user.objects.get(usessionid=userid)
-    vr=recentview.objects.filter(Q(vproduct_id=i)&Q(vuser_id=userid.id))
+    userid = user.objects.get(usessionid=userid)
+    vr = recentview.objects.filter(Q(vproduct_id=i) & Q(vuser_id=userid.id))
     allkinds = kind.objects.all()
     # print(vr)
-    if  len(vr)==0:
+    if len(vr) == 0:
         recentview.objects.create(vproduct_id=i, vuser_id=userid.id)
     else:
-        vr[0].vproduct_id=i#更新访问时间
+        vr[0].vproduct_id = i  # 更新访问时间
         vr[0].save()
     return render(request, 'single-product.html', context={
         'product': sproduct,
@@ -70,14 +72,38 @@ def SinglePage(request, i):
 def search(request):
     pass
 
-def addtocart(request,i):
+
+def addtocart(request, i):
     pass
 
+
 def allproducts(request):
-    allproducts=product.objects.all()
+    allproducts = product.objects.all().order_by('-time')
+    pagelist = Paginator(allproducts, 4)
+    page = request.GET.get('page')
+    try:
+        products = pagelist.page(page)
+    except PageNotAnInteger:
+        products = pagelist.page(1)
+    except EmptyPage:
+        products = pagelist.page(pagelist.num_pages)
+    if products.number-2 < 1:
+        pagea = 1
+    else:
+        pagea = products.number-2
+    if products.number+2 > pagelist.num_pages:
+        pageb = pagelist.num_pages
+    else:
+        pageb = products.number+2
+
+    pagerange = range(pagea, pageb+1)
     allkinds = kind.objects.all()
-    return render(request,'shop.html',context={
-        'allproducts':allproducts,
-        'allkinds':allkinds
+    print(products.number,products.has_next())
+    return render(request, 'shop.html', context={
+        'allproducts': products,
+        'allkinds': allkinds,
+        'pagea': pagea,
+        'pageb': pageb,
+        'pagerange': pagerange
     })
 # Create your views here.

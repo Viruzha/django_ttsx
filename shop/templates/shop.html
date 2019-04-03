@@ -14,8 +14,8 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">主页</a></li>
-                        <li class="active"><a href="shop.html">全部商品</a></li>
+                        <li><a href="{% url 'index' %}">主页</a></li>
+                        <li class="active"><a href="{% url 'allproducts' %}">全部商品</a></li>
                         <!-- <li><a href="single-product.html">商品详情页</a></li> -->
                         <li><a href="cart.html">购物车</a></li>
                         <li><a href="checkout.html">订单详情页</a></li>
@@ -71,19 +71,24 @@
                         <nav>
                           <ul class="pagination">
                             <li>
-                              <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
+                                <a href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+        
+
                             </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
+                            {% for i in pagerange %}
+                                {% ifequal i products.number %}
+                                    <li>{{products.has_previous}}</li>
+                                {% else %}
+                                    <li><a href="?page={{i}}">{{i}}</a></li>
+                                {% endifequal %}
+                            {% endfor %}
                             <li>
-                              <a href="#" aria-label="Next">
+                              <a href="?page={{ products.next_page_number }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
+
                             </li>
                           </ul>
                         </nav>                        
