@@ -71,24 +71,33 @@
                         <nav>
                           <ul class="pagination">
                             <li>
-                                <a href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                {% if allproducts.has_previous %}
+                                <a href="?page={{ allproducts.previous_page_number }}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                       </a>
-        
-
+                                {% else %}
+                                <a class='disable' aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                {% endif %}
                             </li>
                             {% for i in pagerange %}
-                                {% ifequal i products.number %}
-                                    <li>{{products.has_previous}}</li>
+                                {% ifequal i allproducts.number %}
+                                    <li><a>{{i}}</a></li>
                                 {% else %}
                                     <li><a href="?page={{i}}">{{i}}</a></li>
                                 {% endifequal %}
                             {% endfor %}
                             <li>
-                              <a href="?page={{ products.next_page_number }}" aria-label="Next">
+                            {% if allproducts.has_next %}
+                              <a href="?page={{ allproducts.next_page_number }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                               </a>
-
+                            {% else %}
+                            <a class='disable' aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                            {% endif %}
                             </li>
                           </ul>
                         </nav>                        

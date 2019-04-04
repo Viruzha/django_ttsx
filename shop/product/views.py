@@ -77,33 +77,29 @@ def addtocart(request, i):
     pass
 
 
-def allproducts(request):
-    allproducts = product.objects.all().order_by('-time')
-    pagelist = Paginator(allproducts, 4)
+def allproducts123(request):
+    allproductss = product.objects.all().order_by('-time')
+    pagelist = Paginator(allproductss,4)
     page = request.GET.get('page')
     try:
-        products = pagelist.page(page)
-    except PageNotAnInteger:
-        products = pagelist.page(1)
+        allproducts = pagelist.page(page)
     except EmptyPage:
-        products = pagelist.page(pagelist.num_pages)
-    if products.number-2 < 1:
+
+        allproducts = pagelist.page(pagelist.num_pages)
+    except PageNotAnInteger:
+        allproducts = pagelist.page(1)
+
+    if allproducts.number-2 < 1:
         pagea = 1
     else:
-        pagea = products.number-2
-    if products.number+2 > pagelist.num_pages:
+        pagea = allproducts.number-2
+    if allproducts.number+2 > pagelist.num_pages:
         pageb = pagelist.num_pages
     else:
-        pageb = products.number+2
+        pageb = allproducts.number+2
 
-    pagerange = range(pagea, pageb+1)
+    pagerange = list(range(pagea, pageb+1))
     allkinds = kind.objects.all()
-    print(products.number,products.has_next())
-    return render(request, 'shop.html', context={
-        'allproducts': products,
-        'allkinds': allkinds,
-        'pagea': pagea,
-        'pageb': pageb,
-        'pagerange': pagerange
-    })
+    # print(allproducts,pagelist)
+    return render(request, 'shop.html', locals())
 # Create your views here.

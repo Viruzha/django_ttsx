@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,re_path
-from product.views import index,SinglePage,search,addtocart,allproducts
+from product.views import index,SinglePage,search,addtocart,allproducts123
 from django.views.static import serve
 from django.conf import settings
 
@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index,name='index'),
     path('search/',search,name='search'),
-    path('shop/',allproducts,name='allproducts'),
+    path('shop/',allproducts123,name='allproducts'),
     path('addtocart/<int:i>',addtocart,name='addtocart'),
     path('single-page/<int:i>',SinglePage,name='singlepage'),
     re_path('^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
